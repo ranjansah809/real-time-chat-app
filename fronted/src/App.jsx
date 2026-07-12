@@ -20,6 +20,21 @@ function App() {
 })
 
 const messagesEndRef = useRef(null)
+const formatTime = (time) => {
+  const date = new Date(time)
+
+  if (!time || isNaN(date.getTime())) {
+    return new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit"
+    })
+  }
+
+  return date.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  })
+}
 useEffect(() => {
   fetch("https://real-time-chat-app-production-a589.up.railway.app/messages")
     .then((response) => response.json())
@@ -27,10 +42,7 @@ useEffect(() => {
       const history = data.map((item) => ({
         text: item.text,
         sender: "other",
-        time: new Date(item.time).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit"
-        })
+        time: formatTime(item.time)
       }));
 
       setMessages(history);
@@ -45,10 +57,7 @@ useEffect(() => {
       {
         text: data.text,
         sender: "other",
-        time: new Date(data.time).toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit"
-        })
+        time: formatTime(data.time)
       }
     ]);
   });
