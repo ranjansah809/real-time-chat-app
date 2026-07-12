@@ -49,18 +49,23 @@ io.on("connection", (socket) => {
   console.log("User connected:", socket.id);
 
   socket.on("send_message", (message) => {
-  try {
-    const newMessage = {
-      text: message,
-      time: new Date().toISOString()
-    };
+    try {
+      const newMessage = {
+        text: message,
+        time: new Date().toISOString()
+      };
 
-    messages.push(newMessage);
+      messages.push(newMessage);
 
-    socket.broadcast.emit("receive_message", message);
-  } catch (error) {
-    console.error("Message error:", error);
-  }
+      socket.broadcast.emit("receive_message", newMessage);
+    } catch (error) {
+      console.error("Message error:", error);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("User disconnected:", socket.id);
+  });
 });
 
   socket.on("disconnect", () => {
