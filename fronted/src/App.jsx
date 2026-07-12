@@ -1,5 +1,7 @@
+import { io } from "socket.io-client";
 import { useState, useEffect, useRef } from "react"
 import "./App.css"
+const socket = io("http://localhost:3001");
 
 function App() {
   const [message, setMessage] = useState("")
@@ -18,6 +20,43 @@ function App() {
 })
 
 const messagesEndRef = useRef(null)
+useEffect(() => {
+  fetch("http://localhost:3001/messages")
+    .then((response) => response.json())
+    .then((data) => {
+      const history = data.map((item) => ({
+        text: item.text,
+        sender: "other",
+        time: new Date(item.time).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      }));
+
+      setMessages(history);
+    })
+    .catch((error) => {
+      console.error("Failed to load messages:", error);
+    });
+
+  socket.on("receive_message", (data) => {
+    setMessages((prevMessages) => [
+      ...prevMessages,
+      {
+        text: data.text,
+        sender: "other",
+        time: new Date(data.time).toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit"
+        })
+      }
+    ]);
+  });
+
+  return () => {
+    socket.off("receive_message");
+  };
+}, []);
 
 useEffect(() => {
 
@@ -33,8 +72,8 @@ const [isTyping, setIsTyping] = useState(false)
 const [darkMode, setDarkMode] = useState(false)
   const sendMessage = () => {
     if (message !== "") {
-      setMessages([
-  ...messages,
+      setMessages((prevMessages) => [
+  ...prevMessages,
   {
     text: message,
     sender: "me",
@@ -45,35 +84,8 @@ const [darkMode, setDarkMode] = useState(false)
   }
 ])
       setMessage("")
-      setIsTyping(true)
-      setTimeout(() => {
-  let reply = ""
+      socket.emit("send_message", message)
 
-  if (message.toLowerCase() === "hi") {
-    reply = "Hello Ranjan 👋"
-  } else if (message.toLowerCase() === "how are you") {
-    reply = "I'm good 😊 How are you?"
-  } else if (message.toLowerCase() === "what is your name") {
-    reply = "I'm your React Chat Bot 🤖"
-  } else {
-    reply = "Sorry, I don't understand 😅"
-  }
-
-  setMessages((prevMessages) => [
-    ...prevMessages,
-    {
-      text: reply,
-      sender: "other",
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit"
-      })
-    }
-  ])
-
-  setIsTyping(false)
-
-}, 1000)
     }
 }
 
