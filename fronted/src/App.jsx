@@ -1,7 +1,7 @@
 import { io } from "socket.io-client";
 import { useState, useEffect, useRef } from "react"
 import "./App.css"
-const socket = io("http://localhost:3001");
+const socket = io("https://real-time-chat-app-production-a589.up.railway.app");
 
 function App() {
   const [message, setMessage] = useState("")
@@ -21,7 +21,7 @@ function App() {
 
 const messagesEndRef = useRef(null)
 useEffect(() => {
-  fetch("http://localhost:3001/messages")
+  fetch("https://real-time-chat-app-production-a589.up.railway.app/messages")
     .then((response) => response.json())
     .then((data) => {
       const history = data.map((item) => ({
