@@ -1,0 +1,148 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #e5ddd5;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.chat-container {
+  width: 420px;
+  height: 600px;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.chat-header {
+  background: #075e54;
+  color: white;
+  padding: 15px 20px;
+}
+
+.chat-header h2 {
+  margin: 0;
+}
+
+.chat-header p {
+  margin: 5px 0 0;
+  font-size: 14px;
+  color: #b7e4c7;
+}
+
+.chat-messages {
+  flex: 1;
+  padding: 20px;
+  background: #efeae2;
+  overflow-y: auto;
+}
+
+.chat-messages p {
+  text-align: center;
+  color: #777;
+}
+
+.chat-input {
+  display: flex;
+  padding: 12px;
+  background: #f0f2f5;
+  gap: 10px;
+}
+
+.chat-input input {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  font-size: 15px;
+}
+
+.chat-input button {
+  border: none;
+  background: #00a884;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.chat-input button:hover {
+  background: #008f72;
+}
+
+.message {
+  background: #00a884;
+  color: white;
+  padding: 8px 12px;
+  margin: 6px;
+  border-radius: 10px;
+  width: fit-content;
+  margin-left: auto;
+}
+
+.message small {
+  display: block;
+  font-size: 10px;
+  margin-top: 3px;
+  text-align: right;
+  opacity: 0.8;
+}
+
+.message.me {
+  margin-left: auto;
+}
+
+.message.other {
+  margin-left: 0 !important;
+  margin-right: auto !important;
+  background: #e5e5e5;
+  color: black;
+}
+
+.clear-btn {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.clear-btn:hover {
+  background: #e74c3c;
+  transform: scale(1.05);
+}
+
+.app.dark .chat-container {
+  background: #1e1e1e;
+  color: white;
+}
+
+.app.dark .chat-messages {
+  background: #181818;
+}
+
+.app.dark .chat-input {
+  background: #1e1e1e;
+}
+
+.app.dark .message.other {
+  background: #333;
+  color: white;
+}
