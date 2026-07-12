@@ -26,6 +26,7 @@ app.post("/messages", (req, res) => {
     };
 
     messages.push(newMessage);
+    io.emit("receive_message", newMessage);
 
     res.status(201).json(newMessage);
   } catch (error) {
