@@ -36,11 +36,12 @@ https://renewed-delight-production-28c0.up.railway.app
 
 ## How to Run Locally
 
-### 1. Clone the repository
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/ranjansah809/real-time-chat-app.git
 cd real-time-chat-app
+```
 
 ### 2. Start the Backend
 
